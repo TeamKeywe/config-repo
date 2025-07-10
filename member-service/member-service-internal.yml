@@ -1,0 +1,6 @@
+spring:
+  config:
+    activate:
+      on-profile: "internal"
+internal:
+  token: "amcamp-internal-passport-123456"

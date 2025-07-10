@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile: "grpc"
+
+grpc:
+  server:
+    port: ${GRPC_PORT:9090}
+    discovery:
+      service-name: ${spring.application.name}
+  reflection: #grpcurl 디버깅용
+    enable: true
+
+eureka:
+  instance:
+    nonSecurePort:  ${PORT:60007}
+    metadata-map:
+      gRPC.port:  ${GRPC_PORT:9090}
+
+

@@ -1,0 +1,66 @@
+spring:
+  config:
+    activate:
+      on-profile: "routes"
+  cloud:
+    gateway:
+      routes:
+        - id: admin-service-admins
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/admins/**
+            
+        - id: admin-service-auth
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: hospital-service
+          uri: lb://HOSPITAL-SERVICE
+          predicates:
+            - Path=/hospitals/**
+            - Platform=ADMIN
+
+        - id: patient-service
+          uri: lb://PATIENT-SERVICE
+          predicates:
+            - Path=/patients/**
+            - Platform=ADMIN
+
+        - id: pass-service
+          uri: lb://PASS-SERVICE
+          predicates:
+            - Path=/pass-logs/**
+            - Platform=ADMIN
+
+        # Swagger UI routes
+
+        - id: swagger-admin
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/v3/api-docs/admin
+          filters:
+            - RewritePath=/v3/api-docs/admin, /v3/api-docs
+
+        - id: swagger-pass
+          uri: lb://PASS-SERVICE
+          predicates:
+            - Path=/v3/api-docs/pass
+          filters:
+            - RewritePath=/v3/api-docs/pass, /v3/api-docs
+
+        - id: swagger-hospital
+          uri: lb://HOSPITAL-SERVICE
+          predicates:
+            - Path=/v3/api-docs/hospital
+          filters:
+            - RewritePath=/v3/api-docs/hospital, /v3/api-docs
+
+        - id: swagger-patient
+          uri: lb://PATIENT-SERVICE
+          predicates:
+            - Path=/v3/api-docs/patient
+          filters:
+            - RewritePath=/v3/api-docs/patient, /v3/api-docs
+
+

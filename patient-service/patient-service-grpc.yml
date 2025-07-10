@@ -1,0 +1,36 @@
+spring:
+  config:
+    activate:
+      on-profile: "grpc"
+
+grpc:
+  server:
+    port: ${GRPC_PORT:9090}
+    discovery:
+      service-name: ${spring.application.name}
+
+  client:
+    hospital-service:
+      name: hospital-service #환경변수 외부화는 추후 고려
+      negotiationType: plaintext #배포, 운영환경에서는 TLS 변경
+      enable-keep-alive: true
+      discovery:
+        enabled: true  #Eureka에서 hospital-service 찾아 연결
+
+    member-service:
+      name: member-service #환경변수 외부화는 추후 고려
+      negotiationType: plaintext #배포, 운영환경에서는 TLS 변경
+      enable-keep-alive: true
+      discovery:
+        enabled: true  #Eureka에서 member-service 찾아 연결
+
+  reflection: #grpcurl 디버깅용
+    enable: true
+
+eureka:
+  instance:
+    nonSecurePort:  ${PORT:60006}  # gRPC 포트로 Eureka 등록
+    metadata-map:
+      gRPC.port:  ${GRPC_PORT:9090}
+
+

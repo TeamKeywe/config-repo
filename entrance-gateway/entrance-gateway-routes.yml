@@ -1,0 +1,40 @@
+spring:
+  config:
+    activate:
+      on-profile: "routes"
+  cloud:
+    gateway:
+      routes:
+        - id: admin-service-admins
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/admins/**
+            
+        - id: admin-service-auth
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: entrance-service
+          uri: http://entrance-service:60008
+          predicates:
+            - Path=/entrances/**
+            - Platform=ADMIN
+
+
+            # Swagger UI routes
+
+        - id: swagger-admin
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/v3/api-docs/admin
+          filters:
+            - RewritePath=/v3/api-docs/admin, /v3/api-docs
+
+        - id: swagger-entrance
+          uri: http://entrance-service:60008
+          predicates:
+            - Path=/v3/api-docs/entrance
+          filters:
+            - RewritePath=/v3/api-docs/entrance, /v3/api-docs
+

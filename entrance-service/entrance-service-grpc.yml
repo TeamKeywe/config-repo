@@ -1,0 +1,30 @@
+spring:
+  config:
+    activate:
+      on-profile: "grpc"
+
+grpc:
+  server:
+    port: ${GRPC_PORT:50008}
+    discovery:
+      service-name: ${spring.application.name}
+  client:
+    log-service:
+      name: log-service         
+      negotiationType: plaintext
+      enable-keep-alive: true
+      discovery:
+        enabled: true         
+  client:
+    log-service:
+      name: log-service         
+      negotiationType: plaintext
+      enable-keep-alive: true
+      discovery:
+        enabled: true 
+    pass-service:
+      name: pass-service         
+      negotiationType: plaintext
+      enable-keep-alive: true
+      discovery:
+        enabled: true 

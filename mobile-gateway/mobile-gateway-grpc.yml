@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: "grpc"
+
+grpc:
+  client:
+    tenant-service:
+      name: tenant-service
+      negotiationType: plaintext
+      enable-keep-alive: true
+      discovery:
+        enabled: true

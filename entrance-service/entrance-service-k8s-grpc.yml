@@ -1,0 +1,26 @@
+spring:
+  config:
+    activate:
+      on-profile: "k8s-grpc"
+
+grpc:
+  server:
+    port: ${GRPC_PORT:50008}
+    discovery:
+      service-name: ${spring.application.name}
+
+  client:
+    log-service:
+      name: log-service
+      negotiationType: plaintext
+      enable-keep-alive: true
+      address: dns:///log-service:50010
+      discovery:
+        enabled: false   # Eureka 미사용
+    pass-service:
+      name: pass-service
+      negotiationType: plaintext
+      enable-keep-alive: true
+      address: dns:///pass-service:50003
+      discovery:
+        enabled: false 

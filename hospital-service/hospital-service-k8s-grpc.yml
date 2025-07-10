@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: "k8s-grpc"
+
+grpc:
+  server:
+    port: ${GRPC_PORT:9090}
+    discovery:
+      service-name: ${spring.application.name}
+  reflection:
+    enable: true
+
+
