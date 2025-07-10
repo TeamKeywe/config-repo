@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: "k8s-grpc"
+
+grpc:
+  server:
+    port: ${GRPC_PORT:9090}
+    discovery:
+      service-name: ${spring.application.name}
+
+  client:
+    hospital-service:
+      name: hospital-service
+      negotiationType: plaintext
+      enable-keep-alive: true
+      address: dns:///hospital-service:50004
+      discovery:
+        enabled: false   # Eureka 미사용
+
+  reflection:
+    enable: true

@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "swagger"
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: admin
+        url: /v3/api-docs/admin
+      - name: hospital
+        url: /v3/api-docs/hospital
+      - name: entrance
+        url: /v3/api-docs/entrance
+
+        

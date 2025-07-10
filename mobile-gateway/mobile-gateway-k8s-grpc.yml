@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: "k8s-grpc"
+
+grpc:
+  client:
+    tenant-service:
+      name: tenant-service
+      negotiationType: plaintext
+      enable-keep-alive: true
+      address: "dns:///tenant-service:50007"   # K8s 서비스명과 포트 직접 지정!
+      discovery:
+        enabled: false

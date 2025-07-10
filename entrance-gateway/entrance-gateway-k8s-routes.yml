@@ -1,0 +1,54 @@
+spring:
+  config:
+    activate:
+      on-profile: "k8s-routes"
+  cloud:
+    gateway:
+      routes:
+        - id: admin-service-admins
+          uri: http://admin-service:60002
+          predicates:
+            - Path=/admins/**
+
+        - id: admin-service-auth
+          uri: http://admin-service:60002
+          predicates:
+            - Path=/auth/**
+
+        - id: hospital-service
+          uri: http://hospital-service:60004
+          predicates:
+            - Path=/hospitals/**
+            - Platform=ADMIN
+            
+        - id: entrance-service
+          uri: http://entrance-service:60008
+          predicates:
+            - Path=/entrances/**
+            - Platform=ADMIN
+
+        # Swagger UI routes
+
+        - id: swagger-admin
+          uri: http://admin-service:60002
+          predicates:
+            - Path=/v3/api-docs/admin
+          filters:
+            - RewritePath=/v3/api-docs/admin, /v3/api-docs
+
+        - id: swagger-hospital
+          uri: http://hospital-service:60004
+          predicates:
+            - Path=/v3/api-docs/hospital
+          filters:
+            - RewritePath=/v3/api-docs/hospital, /v3/api-docs
+
+        - id: swagger-entrance
+          uri: http://entrance-service:60008
+          predicates:
+            - Path=/v3/api-docs/entrance
+          filters:
+            - RewritePath=/v3/api-docs/entrance, /v3/api-docs
+
+
+

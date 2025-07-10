@@ -1,0 +1,42 @@
+spring:
+  config:
+    activate:
+      on-profile: "security"
+
+security:
+  endpoints:
+    public-endpoints:
+      - path: /auth/login
+        methods: [POST]
+      - path: /auth/reissue
+        methods: [POST]
+      - path: /admins/**
+        methods: [POST]
+
+      # swagger endpoints
+      - path: /swagger-ui/**
+        methods: [GET]
+      - path: /v3/api-docs/**
+        methods: [GET]
+
+      #actuator endpoints
+      - path: /actuator/**
+        methods: [GET, POST]
+
+    protected-endpoints:
+      - path: /auth/logout
+        methods: [POST]
+      - path: /admins/**
+        methods: [GET,PATCH,DELETE]
+      - path: /patients/**
+        methods: [ GET,POST,PATCH,DELETE ]
+      - path: /hospitals/**
+        methods: [ GET,POST,PATCH,DELETE ]
+      - path: /passes/**
+        methods: [ GET,POST,PATCH,DELETE ]
+      - path: /pass-logs/**
+        methods: [ GET,POST,PATCH,DELETE ]
+jwt:
+  access-token-secret: ${JWT_ACCESS_TOKEN_SECRET}
+
+  

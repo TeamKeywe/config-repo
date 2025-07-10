@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: "grpc"
+
+grpc:
+  server:
+      port: ${GRPC_PORT:50003}
+      discovery:
+        service-name: ${spring.application.name}
+  client:
+    hospital-service:
+      name: hospital-service #환경변수 외부화는 추후 고려
+      negotiationType: plaintext #배포, 운영환경에서는 TLS 변경
+      enable-keep-alive: true
+      discovery:
+        enabled: true  #Eureka에서 hospital-service 찾아 연결
+    member-service:
+      name: member-service #환경변수 외부화는 추후 고려
+      negotiationType: plaintext #배포, 운영환경에서는 TLS 변경
+      enable-keep-alive: true
+      discovery:
+        enabled: true  #Eureka에서 member-service 찾아 연결
+    patient-service:
+      name: patient-service #환경변수 외부화는 추후 고려
+      negotiationType: plaintext #배포, 운영환경에서는 TLS 변경
+      enable-keep-alive: true
+      discovery:
+        enabled: true  #Eureka에서 patient-service 찾아 연결    

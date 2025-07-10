@@ -1,0 +1,76 @@
+spring:
+  config:
+    activate:
+      on-profile: "k8s-routes"
+  cloud:
+    gateway:
+      routes:
+        - id: member-service-members
+          uri: http://member-service:60001
+          predicates:
+            - Path=/members/**
+
+        - id: member-service-auth
+          uri: http://member-service:60001
+          predicates:
+            - Path=/auth/**
+
+        - id: did-service
+          uri: http://did-service:60005
+          predicates:
+            - Path=/dids/**
+            - Platform=MOBILE
+
+        - id: hospital-service
+          uri: http://hospital-service:60004
+          predicates:
+            - Path=/hospitals/**
+            - Platform=MOBILE
+
+        - id: pass-service
+          uri: http://pass-service:60003
+          predicates:
+            - Path=/passes/**
+            - Platform=MOBILE
+
+        - id: patient-service
+          uri: http://patient-service:60006
+          predicates:
+            - Path=/patients/**
+            - Platform=MOBILE
+
+        # Swagger UI routes
+        - id: swagger-member
+          uri: http://member-service:60001
+          predicates:
+            - Path=/v3/api-docs/member
+          filters:
+            - RewritePath=/v3/api-docs/member, /v3/api-docs
+
+        - id: swagger-did
+          uri: http://did-service:60005
+          predicates:
+            - Path=/v3/api-docs/did
+          filters:
+            - RewritePath=/v3/api-docs/did, /v3/api-docs
+
+        - id: swagger-pass
+          uri: http://pass-service:60003
+          predicates:
+            - Path=/v3/api-docs/pass
+          filters:
+            - RewritePath=/v3/api-docs/pass, /v3/api-docs
+
+        - id: swagger-hospital
+          uri: http://hospital-service:60004
+          predicates:
+            - Path=/v3/api-docs/hospital
+          filters:
+            - RewritePath=/v3/api-docs/hospital, /v3/api-docs
+
+        - id: swagger-patient
+          uri: http://patient-service:60006
+          predicates:
+            - Path=/v3/api-docs/patient
+          filters:
+            - RewritePath=/v3/api-docs/patient, /v3/api-docs
